@@ -29,18 +29,24 @@ public class FilePickerPlugin: NSObject, FlutterPlugin {
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
-        case "pickFiles":
-            handleFileSelection(call, result: result)
-            
-        case "getDirectoryPath":
-            handleDirectorySelection(call, result: result)
-            
-        case "saveFile":
-            handleSaveFile(call, result: result)
-            
-        default:
-            result(FlutterMethodNotImplemented)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                result(nil)
+                return
+            }
+            switch call.method {
+            case "pickFiles":
+                handleFileSelection(call, result: result)
+
+            case "getDirectoryPath":
+                handleDirectorySelection(call, result: result)
+
+            case "saveFile":
+                handleSaveFile(call, result: result)
+
+            default:
+                result(FlutterMethodNotImplemented)
+            }
         }
     }
     
